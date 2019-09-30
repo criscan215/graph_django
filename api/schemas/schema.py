@@ -6,4 +6,8 @@ class Query(task_schema.TaskQuery):
     pass
 
 
-schema = graphene.Schema(query=Query)
+class Mutation(task_schema.TaskMutation, graphene.ObjectType):
+    pass
+
+
+schema = graphene.Schema(query=Query, mutation=Mutation)
