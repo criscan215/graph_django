@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'graphene_django',
+    'api',
 ]
 
 MIDDLEWARE = [
@@ -47,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'graph_django.urls'
@@ -68,6 +71,10 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'graph_django.wsgi.application'
+
+GRAPHENE = {
+    'SCHEMA': 'api.schemas.schema'
+}
 
 
 # Database
@@ -118,3 +125,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+import sys
+sys.path.append(os.sep.join([os.path.expanduser('~'), 'shared']))
+try:
+    from graph_django.local_settings import *
+except ImportError as err:
+    sys.stdout.write('\nError importing external settings module\n')
+    sys.stdout.write(str(err))
+    sys.stdout.write('\nImporting local\n')
+    try:
+        from local_settings import *
+    except ImportError:
+        pass
