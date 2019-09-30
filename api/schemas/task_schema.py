@@ -37,7 +37,9 @@ class CreateTask(graphene.Mutation):
             text=task.text
         )
 
+
 class TaskMutation(graphene.ObjectType):
     create_task = CreateTask.Field()
+
 
 task_schema = graphene.Schema(query=TaskQuery, mutation=TaskMutation)
