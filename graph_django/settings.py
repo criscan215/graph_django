@@ -73,9 +73,16 @@ TEMPLATES = [
 WSGI_APPLICATION = 'graph_django.wsgi.application'
 
 GRAPHENE = {
-    'SCHEMA': 'api.schemas.schema'
+    'SCHEMA': 'api.schemas.schema',
+    'MIDDLEWARE': [
+        'graphql_jwt.middleware.JSONWebTokenMiddleware',
+    ],
 }
 
+AUTHENTICATION_BACKENDS = [
+    'graphql_jwt.backends.JSONWebTokenBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
